@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisation de l'Intelligence Artificielle Générative pour la Fusion pour l'énergie</title>
+
+    <!-- Inclusion de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papQx8qu5qlhdfp6zz3RSLiQbrdgKcR6OZlBm0NgK0gFhV5Ka+Bj+KX5Ml+7sN4Kk+9D7k7lTgEXRQnL1pKzEg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Ajout du script MathJax pour afficher correctement les formules LaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+            id="MathJax-script"
+            async>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.4.3/mermaid.min.js"></script>
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #1b5e20;
+            --light-bg: #f1f8e9;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(46, 125, 50, 0.9), rgba(27, 94, 32, 0.7));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 70px; /* Pour compenser la hauteur de la navigation fixe */
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem; /* Réduction de la taille du titre */
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1rem; /* Réduction de la taille du paragraphe */
+            margin-bottom: 2rem;
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.6rem 1.2rem; /* Réduction du padding */
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem; /* Réduction de la taille de la police */
+        }
+
+        .button:hover {
+            background-color: var(--light-bg);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 1.5rem; /* Réduction du padding */
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem; /* Réduction de la taille du titre */
+            margin-bottom: 2.5rem; /* Réduction de la marge */
+            color: var(--primary-color);
+        }
+
+        /* Sub-section styling */
+        .sub-section {
+            margin-bottom: 1.5rem; /* Réduction de la marge */
+            padding: 0.8rem; /* Réduction du padding */
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sub-section h3 {
+            font-size: 1.5rem; /* Réduction de la taille */
+            margin-bottom: 0.8rem; /* Réduction de la marge */
+            color: var(--secondary-color);
+        }
+
+        .sub-section p {
+            font-size: 0.95rem; /* Réduction de la taille */
+            margin-bottom: 0.8rem; /* Réduction de la marge */
+        }
+
+        figure {
+            margin: 0.8rem 0; /* Réduction de la marge */
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 50%; /* Diminution de la taille des images à 50% de leur conteneur */
+            height: auto;
+            border-radius: 8px;
+        }
+
+        figure figcaption {
+            font-size: 0.85rem; /* Réduction de la taille */
+            color: #666;
+            margin-top: 0.3rem; /* Réduction de la marge */
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem; /* Réduction du padding */
+            text-align: center;
+            font-size: 0.9rem; /* Réduction de la taille */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .button {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .sub-section h3 {
+                font-size: 1.4rem;
+            }
+
+            .sub-section p {
+                font-size: 0.9rem;
+            }
+
+            figure img {
+                max-width: 100%; /* Sur petits écrans, les images prennent toute la largeur disponible */
+            }
+        }
+
+        .collaborators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2em;
+            margin: 2em 0;
+        }
+
+                    /* Ajout pour le scroll smooth */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Ajustement pour la navigation fixe */
+            section {
+                padding-top: 80px;  /* Pour compenser la hauteur de la barre de navigation */
+                margin-top: -80px;  /* Pour corriger le décalage */
+                scroll-margin-top: 80px; /* Pour assurer que la section commence au bon endroit */
+            }
+
+            /* Style pour la barre de navigation active */
+            .nav-links a.active {
+                background-color: var(--secondary-color);
+            }
+
+        .collaborator-card {
+            background: #f8f9fa;
+            padding: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .collaborator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .collaborator-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5em;
+        }
+
+        .collaborator-role {
+            color: #666;
+            font-size: 0.9em;
+        }
+        /* Styles pour aligner les figures ml1/ml2 et ml10/ml11 côte à côte */
+        .figure-left-right {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8em; /* Réduction de l'écart */
+            flex-wrap: wrap;
+        }
+
+        .figure-left-right figure {
+            flex: 1;
+            min-width: 25%; /* Réduction de la largeur minimale pour les figures alignées */
+        }
+
+        .figure-left-right img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            max-width: 100%; /* Assure que les images ne dépassent pas leur conteneur */
+        }
+
+        /* Styles supplémentaires pour les formules */
+        .formula-inline {
+            background-color: #f1f8e9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .formula-block {
+            background-color: #f1f8e9;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        /* Styles pour les cartes de code */
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 1.3rem; /* Réduction de la taille */
+            margin-bottom: 0.4rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+    .partners-section {
+    margin: 2em 0;
+    }
+
+    .partners-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5em;
+        margin-top: 2em;
+    }
+
+    .partner-card {
+        background: #ffffff;
+        padding: 1.5em;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+        border: 1px solid #e0e0e0;
+    }
+
+    .partner-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .partner-name {
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5em;
+    }
+
+    .partner-role {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-bottom: 0.3em;
+    }
+
+    .partner-affiliation {
+        color: #666;
+        font-size: 0.9em;
+        padding: 0.2em 0.5em;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        display: inline-block;
+    }
+
+        .stylish-list {
+            list-style-type: disc;
+            margin-left: 1.2rem; /* Réduction de la marge */
+            font-size: 0.9rem; /* Réduction de la taille */
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem; /* Réduction de l'écart */
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+.section-title {
+    color: #2c3e50;
+    font-size: 2em;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.sub-section {
+    margin: 3em 0;
+}
+
+.sub-section h3 {
+    color: #2c3e50;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.sub-section h4 {
+    color: #34495e;
+    font-size: 1.2em;
+    margin: 1em 0;
+}
+
+.figure-container {
+    width: 100%;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.centered-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+.figure-caption {
+    margin-top: 1em;
+    padding: 0 1em;
+}
+
+.figure-title {
+    text-align: center;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.figure-description {
+    text-align: justify;
+    line-height: 1.6;
+    color: #333;
+}
+
+.content-list {
+    list-style-type: disc;
+    padding-left: 2em;
+    margin: 1em 0;
+}
+
+.content-list li {
+    margin: 0.5em 0;
+    line-height: 1.6;
+}
+
+ul {
+    padding-left: 2em;
+    margin: 1em 0;
+}
+
+ul li {
+    margin: 0.5em 0;
+    line-height: 1.6;
+}
+
+strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+p {
+    line-height: 1.6;
+    margin: 1em 0;
+    color: #333;
+}
+
+        .form-group label {
+            margin-bottom: 0.3rem; /* Réduction de la marge */
+            font-weight: bold;
+            font-size: 0.95rem; /* Réduction de la taille */
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.4rem; /* Réduction du padding */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem; /* Réduction de la taille */
+        }
+
+        .button {
+            padding: 0.5rem 1rem; /* Réduction du padding */
+            font-size: 0.85rem; /* Réduction de la taille */
+        }
+
+        .note {
+            font-size: 0.9rem; /* Réduction de la taille */
+            color: #555;
+            margin-top: 0.8rem; /* Réduction de la marge */
+            background-color: #e8f5e9;
+            padding: 0.8rem;
+            border-radius: 8px;
+        }
+        .diagram-container {
+            width: 100%;
+            margin: 2em 0;
+            padding: 1em;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mermaid-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Pour s'assurer que le SVG généré est bien centré */
+        .mermaid-center svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+    margin: 2em 0;
+}
+
+.figure-container {
+    width: 100%;
+    text-align: center;
+    margin: 1em 0;
+}
+
+.center-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.profile-examples {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    margin: 2em 0;
+}
+
+.profile-example {
+    text-align: center;
+}
+
+.profile-example p {
+    margin-top: 1em;
+    text-align: left;
+}
+
+/* Styles existants maintenus */
+.constraints-section {
+    margin: 2em 0;
+}
+
+.math-constraints {
+    list-style-type: decimal;
+    padding-left: 2em;
+}
+
+.math-constraints li {
+    margin: 1em 0;
+}
+
+.stylish-list {
+    list-style-type: none;
+    padding-left: 1.5em;
+}
+
+.stylish-list li:before {
+    content: "•";
+    color: #2c3e50;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+.sub-section {
+    margin: 2em 0;
+}
+
+.introduction-text {
+    margin-bottom: 2em;
+}
+
+.figure-container {
+    width: 100%;
+    text-align: center;
+    margin: 2em 0;
+}
+
+.center-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.workflow-list {
+    list-style-type: decimal;
+    padding-left: 2em;
+    margin: 1.5em 0;
+}
+
+.workflow-list > li {
+    margin-bottom: 1.5em;
+}
+
+.workflow-list ul {
+    list-style-type: disc;
+    padding-left: 2em;
+    margin: 0.5em 0;
+}
+
+.workflow-list ul li {
+    margin: 0.5em 0;
+}
+
+.dopplight-structure h4,
+.dopplight-advantages h4 {
+    margin: 1.5em 0 1em 0;
+    color: #2c3e50;
+}
+
+.dopplight-advantages p {
+    margin: 1em 0;
+    line-height: 1.6;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.sub-section {
+    margin: 2em 0;
+}
+
+.introduction-text {
+    margin-bottom: 2em;
+    line-height: 1.6;
+}
+
+.analysis-section {
+    margin: 2em 0;
+}
+
+.figure-section {
+    margin: 3em 0;
+    padding: 1em;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.center-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.figure-caption {
+    text-align: justify;
+    margin-top: 1.5em;
+    color: #333;
+    font-size: 0.95em;
+    padding: 0 1em;
+    line-height: 1.6;
+}
+
+.figure-caption strong {
+    color: #2c3e50;
+}
+
+.conclusion-section {
+    margin-top: 3em;
+    padding: 1.5em;
+    background-color: #f1f5f9;
+    border-left: 4px solid #2c3e50;
+    border-radius: 4px;
+}
+
+h4 {
+    color: #2c3e50;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+
+strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.figure-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.figure-description {
+    text-align: justify;
+    line-height: 1.6;
+    color: #333;
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Projet CHP</a>
+            <div class="nav-links">
+                <a href="#about">À Propos</a>
+                <a href="#physics">Physique</a>
+                <a href="#ml">Machine Learning</a>
+                <a href="#methodology">Méthodologie</a>
+                <a href="#results">Résultats</a>
+                <a href="#team">Équipe</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Utilisation de l'Intelligence Artificielle Générative pour la Fusion pour l'énergie</h1>
+            <p>Une approche innovante combinant physique théorique et intelligence artificielle pour résoudre des problématiques avancées.</p>
+            <div class="quick-links">
+                <a href="#about" class="button">À Propos</a>
+                <a href="#physics" class="button">Physique</a>
+                <a href="#ml" class="button">Machine Learning</a>
+                <a href="#results" class="button">Résultats</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">À Propos du Projet</h2>
+        
+            <div class="sub-section">
+                <h3>Contexte Scientifique</h3>
+                <p>
+                    Ce projet s'inscrit dans la recherche avancée en fusion inertielle et en physique des plasmas. Il vise à 
+                    exploiter les interactions complexes entre les champs électromagnétiques et les particules chargées pour 
+                    optimiser la production d’énergie dans les dispositifs de confinement inertiel. Pour cela, nous proposons 
+                    une approche novatrice combinant la modulation dynamique du <strong>pas</strong> des <strong>coils</strong> 
+                    et l'apprentissage automatique (via des <em>Variational Autoencoders</em>), afin de générer des profils 
+                    optimaux capables de maximiser l'énergie cinétique des particules en sortie.
+                </p>
+            </div>
+        
+            <div class="sub-section">
+                <h3>Objectifs</h3>
+                <p>
+                    Ce projet vise à repenser les architectures magnétiques des systèmes TNSA en combinant physique des plasmas et intelligence artificielle. 
+                    Son ambition centrale est de maîtriser le comportement des particules chargées via une optimisation hybride, articulée autour de trois axes :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Génération de géométries innovantes :</strong>  
+                        Explorer des configurations de <strong>coils</strong> et de <strong>pas</strong> non conventionnelles grâce à des <em>Variational Autoencoders (VAE)</em>, 
+                        pour améliorer la focalisation du faisceau et réduire sa divergence.
+                    </li>
+                    <li>
+                        <strong>Contrôle adaptatif par IA :</strong>  
+                        Intégrer des algorithmes d’apprentissage profond pour ajuster dynamiquement les paramètres des simulations 
+                        (champs magnétiques, densité plasma) en temps réel.
+                    </li>
+                    <li>
+                        <strong>Optimisation énergétique radicale :</strong>  
+                        Synchroniser finement les <strong>coils</strong> et le <strong>pas</strong> afin de diminuer de <em>30%</em> les pertes d’énergie 
+                        par rapport aux dispositifs de confinement inertiel classiques.
+                    </li>
+                </ul>
+            </div>
+        
+            <div class="sub-section">
+                <h3>Approche Interdisciplinaire</h3>
+                <p>
+                    Ce projet fusionne trois domaines clés pour révolutionner le design des systèmes TNSA, en exploitant simultanément :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Physique des Plasmas :</strong>  
+                        Modélisation multi-échelle des effets du <strong>pas</strong> et de l’architecture des <strong>coils</strong> sur la dynamique des électrons rapides, avec validation expérimentale.
+                    </li>
+                    <li>
+                        <strong>Intelligence Artificielle :</strong>  
+                        Entraînement de <em>Variational Autoencoders (VAE)</em> pour découvrir des lois de variation du <strong>pas</strong> et des <strong>coils</strong> contre-intuitives mais hautement efficaces.
+                    </li>
+                    <li>
+                        <strong>Calcul Haute Performance (HPC) :</strong> 
+                        Exploitation des architectures parallèles gérées par <em>SLURM</em> pour générer des jeux de données massifs via des <em>job arrays</em>, et entraîner les modèles de <em>VAE</em> sur des clusters GPU avec allocation dynamique de ressources dédiées aux calculs intensifs.
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="physics">
+        <div class="section-container">
+            <h2 class="section-title">Fondamentaux en Physique</h2>
+    
+            <div class="sub-section">
+                <h3>Protonthérapie et Traitement du Cancer</h3>
+                <h4>Pourquoi utiliser des accélérateurs de protons en oncologie ?</h4>
+                <p>La protonthérapie est une alternative avancée à la radiothérapie conventionnelle, utilisant des protons au lieu des rayons X.</p>
+                <p><strong>Avantages :</strong></p>
+                <ul>
+                    <li>Précision accrue grâce au <strong>pic de Bragg</strong>, qui dépose l'énergie uniquement dans la tumeur.</li>
+                    <li>Réduction des dommages aux tissus sains environnants.</li>
+                    <li>Particulièrement efficace pour les <strong>cancers pédiatriques et tumeurs profondes</strong>.</li>
+                </ul>
+                <div class="figure-container">
+                    <img src="./images/pt2.png" alt="Comparaison entre rayons X et protons" class="centered-image">
+                    <figcaption class="figure-caption">
+                        <div class="figure-title">
+                            <strong>Figure 1 : Comparaison entre rayons X et protons</strong>
+                        </div>
+                        <div class="figure-description">
+                            Illustration du Pic de Bragg montrant la différence entre la protonthérapie et la radiothérapie classique.
+                        </div>
+                    </figcaption>
+                </div>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Processus d'Accélération par Laser</h3>
+                <ul>
+                    <li><strong>Target Normal Sheath Acceleration (TNSA)</strong>
+                        <ul>
+                            <li>Les électrons chauffés créent un champ électrique qui accélère les protons.</li>
+                            <li>Méthode robuste mais produit un faisceau de protons avec une grande divergence angulaire.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Radiation Pressure Acceleration (RPA)</strong>
+                        <ul>
+                            <li>La pression de radiation du laser pousse directement les ions.</li>
+                            <li>Faible divergence, meilleure distribution énergétique, mais nécessite des lasers très intenses.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Accélération par Choc Sans Collision</strong>
+                        <ul>
+                            <li>Utilise des chocs de plasma générés par le laser.</li>
+                            <li>Génère des faisceaux de haute énergie, mais difficile à contrôler.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Pourquoi Choisir le TNSA ?</h3>
+                <ul>
+                    <li><strong>Avantages :</strong>
+                        <ul>
+                            <li>Facile à mettre en œuvre.</li>
+                            <li>Nécessite une intensité laser modérée.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Limites :</strong>
+                        <ul>
+                            <li><strong>Divergence angulaire :</strong> Faisceau dispersé, difficile à focaliser.</li>
+                            <li><strong>Distribution énergétique exponentielle :</strong> La plupart des protons ont une énergie faible.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="figure-container">
+                    <img src="./images/TnsaPNG.PNG" alt="TNSA Accélération" class="centered-image">
+                    <figcaption class="figure-caption">
+                        <div class="figure-title">
+                            <strong>Figure 2 : Processus TNSA</strong>
+                        </div>
+                        <div class="figure-description">
+                            Schéma de l'accélération par TNSA.
+                        </div>
+                    </figcaption>
+                </div>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Synchronisation et Durée de l'Impulsion de Courant</h3>
+                <p><strong>Synchronisation entre les protons et les impulsions de courant :</strong></p>
+                <p>La propagation des protons et des impulsions de courant doit être synchronisée.</p>
+                <p><strong>Formule :</strong></p>
+                <p>\[
+                \frac{h}{v_{\text{proton}}} = \frac{\sqrt{h^2 + 4 \pi^2 a^2}}{c}
+                \]</p>
+                <p>Cette synchronisation permet au champ électromagnétique d'accélérer efficacement les protons en améliorant leur focalisation.</p>
+    
+                <p><strong>Durée de l'impulsion de courant :</strong></p>
+                <p>L'impulsion de courant doit couvrir plus d'un tour de la bobine hélicoïdale.</p>
+                <p><strong>Formule :</strong></p>
+                <p>\[
+                a \leq \frac{c \cdot t_{\text{pulse}}}{2 \pi}
+                \]</p>
+                <p>Une impulsion suffisamment longue garantit une accélération continue.</p>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Techniques d'Amélioration : Saut de Phase et Variation du Pas</h3>
+                <p><strong>Saut de Phase :</strong></p>
+                <ul>
+                    <li>Introduit une section de dérive entre deux bobines hélicoïdales.</li>
+                    <li>Évite la désynchronisation due à l'augmentation de vitesse des particules.</li>
+                </ul>
+    
+                <p><strong>Variation du Pas :</strong></p>
+                <ul>
+                    <li>Modifie progressivement le pas de l'hélice pour maintenir la synchronisation.</li>
+                    <li>Adapte la géométrie à la vitesse croissante des particules.</li>
+                </ul>
+    
+                <p><strong>Combinaison des Deux Techniques :</strong></p>
+                <ul>
+                    <li>Le saut de phase aligne les particules avec une nouvelle région de champ accélérateur.</li>
+                    <li>La variation du pas assure la synchronisation tout au long de la bobine.</li>
+                    <li>Résultat : meilleure efficacité et densité de faisceau accrue.</li>
+                </ul>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Dispersion du courant et rôle du tube ajouté</h3>
+                <div class="figure-container">
+                    <img src="./images/dispersion.PNG" alt="Dispersion du courant" class="centered-image">
+                    <figcaption class="figure-caption">
+                        <div class="figure-title">
+                            <strong>Figure 3 : Dispersion du courant</strong>
+                        </div>
+                        <div class="figure-description">
+                            La propagation des impulsions de courant le long de la bobine.
+                        </div>
+                    </figcaption>
+                </div>
+                <ul class="content-list">
+                    <li>La propagation des impulsions de courant le long de la bobine est dispersée.</li>
+                    <li>Cette dispersion produit de petits paquets de protons, rendant l'accélération inefficace tout au long de la bobine.</li>
+                </ul>
+            </div>
+    
+            <div class="sub-section">
+                <h3>Solution : Ajout d'un tube conducteur</h3>
+                <div class="figure-container">
+                    <img src="./images/tube.PNG" alt="Tube" class="centered-image">
+                    <figcaption class="figure-caption">
+                        <div class="figure-title">
+                            <strong>Figure 4 : Structure du tube conducteur</strong>
+                        </div>
+                        <div class="figure-description">
+                            Visualisation du tube conducteur ajouté à la structure.
+                        </div>
+                    </figcaption>
+                </div>
+                <ul class="content-list">
+                    <li>Le tube limite la dispersion du courant le long de la bobine et augmente le regroupement de protons.</li>
+                </ul>
+                <div class="figure-container">
+                    <img src="./images/couranttube.PNG" alt="Courant avec et sans tube" class="centered-image">
+                    <figcaption class="figure-caption">
+                        <div class="figure-title">
+                            <strong>Figure 5 : Effet du tube sur le courant</strong>
+                        </div>
+                        <div class="figure-description">
+                            Le courant électrique le long de la bobine avec et sans tube.
+                        </div>
+                    </figcaption>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION MACHINE LEARNING ET DEEP LEARNING -->
+    <section id="ml">
+        <div class="section-container">
+            
+            <!-- ======== TITRE PRINCIPAL ======== -->
+            <h2 class="section-title">Machine Learning et Deep Learning</h2>
+            
+            <!-- ======== RÉSEAUX DE NEURONES ======== -->
+            <div class="sub-section">
+                <h3>Réseaux de Neurones</h3>
+                
+                <p>
+                    Les réseaux de neurones artificiels (<em>Artificial Neural Networks</em>) s’inspirent grossièrement du fonctionnement biologique du cerveau. 
+                    Ils sont composés d'unités de calcul appelées <strong>neurones</strong>, organisées en couches. 
+                    Chaque neurone reçoit des entrées (pondérées), applique une <strong>fonction d’activation non linéaire</strong> (par ex. \( \mathrm{ReLU}(x) = \max(0, x) \), \( \mathrm{Sigmoid}(x) = \frac{1}{1+e^{-x}} \), \( \tanh(x) \)), 
+                    puis transmet sa sortie vers les neurones de la couche suivante.
+                </p>
+
+                <p>
+                    <strong>Non-linéarités</strong> : Les fonctions d’activation telles que \( \mathrm{ReLU}(x) = \max(0, x) \) ou \( \mathrm{Sigmoid}(x) = \frac{1}{1+e^{-x}} \) 
+                    introduisent la capacité de modéliser des relations complexes. Sans ces non-linéarités, un réseau ne serait qu’une suite de transformations linéaires, 
+                    dont la puissance de représentation serait très limitée.
+                </p>
+                <div class="figure-left-right">
+                    <figure>
+                        <img src="images/ml1.jpg" alt="Schéma représentant le fonctionnement d'un neurone artificiel">
+                        <figcaption>Schéma représentant le fonctionnement d'un neurone artificiel.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/ml2.jpg" alt="Diagramme illustrant l'architecture d'un réseau de neurones">
+                        <figcaption>Diagramme illustrant l'architecture d'un réseau de neurones.</figcaption>
+                    </figure>
+                </div>
+                
+                
+                <p>
+                    <strong>Processus d’entraînement</strong> : Les poids (ou paramètres) des neurones se mettent à jour via 
+                    un algorithme de descente de gradient, nommé <em>rétropropagation de l’erreur</em> 
+                    (<em>backpropagation</em>). On utilise une <em>fonction de perte</em> (ex. l’erreur quadratique moyenne) 
+                    pour quantifier la différence entre la sortie prédite et la sortie attendue. 
+                    Le gradient de cette perte par rapport aux poids est alors calculé, puis ces derniers sont ajustés dans le sens qui minimise la perte.
+                </p>
+                <figure>
+                    <img src="images/ml3.jpg" alt="Graphique illustrant le processus d'apprentissage">
+                    <figcaption>Graphique illustrant le processus de rétropropagation.</figcaption>
+                </figure>
+            </div>
+
+            <!-- ======== CNNs ======== -->
+            <div class="sub-section">
+                <h3>Les Réseaux de Neurones Convolutionnels (CNNs)</h3>
+                
+                <p>
+                    Les CNNs sont conçus pour gérer efficacement les données structurées sous forme de grille (images 2D, signaux 1D, etc.). 
+                    Contrairement aux réseaux de neurones <em>denses</em> (ou fully connected) où chaque neurone est connecté à tous les neurones de la couche précédente, 
+                    un CNN utilise des <strong>filtres convolutifs</strong> qui se déplacent (ou « glissent ») le long du signal. 
+                    Cela réduit considérablement le nombre de paramètres, tout en capturant automatiquement des motifs locaux.
+                </p>
+                <figure>
+                    <img src="images/ml4.jpg" alt="Illustration d'une couche CNN">
+                    <figcaption>Illustration d'une couche CNN.</figcaption>
+                </figure>
+
+                <p>
+                    <strong>Avantages et différences clés par rapport aux réseaux classiques</strong> :  
+                    <ul>
+                        <li>
+                            <em>Sparse interactions</em> : Les filtres convolutifs opèrent sur de petits champs réceptifs, 
+                            plutôt que sur l’ensemble des entrées à la fois.
+                        </li>
+                        <li>
+                            <em>Partage de paramètres</em> : Le même filtre est appliqué à plusieurs positions du signal ou de l’image, 
+                            réduisant ainsi le risque de surapprentissage.
+                        </li>
+                        <li>
+                            <em>Hiérarchie des caractéristiques</em> : Les premières couches extraient des motifs simples (ex. bords, contours), 
+                            les couches suivantes combinent ces motifs en structures plus complexes (ex. formes, textures, etc.).
+                        </li>
+                    </ul>
+                </p>
+
+                <p>
+                    <strong>Notions clés (padding, stride, pooling)</strong> :  
+                    <ul>
+                        <li>
+                            <strong>Padding</strong> : Ajoute des bords (souvent de zéros) autour de l'entrée afin de contrôler la taille de la sortie. 
+                            \( \text{padding}='same' \) cherche à maintenir la même dimension en sortie qu’en entrée.
+                            <figure>
+                                <img src="images/ml5.jpg" alt="Illustration de l'application du padding dans un CNN">
+                                <figcaption>Illustration de l'application du padding dans un CNN.</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <strong>Stride</strong> : Indique le pas de déplacement du filtre lors de la convolution. 
+                            Un stride de 1 glisse le filtre point par point. Un stride > 1 réduit la taille spatiale en sortie.
+                            <figure>
+                                <img src="images/ml6.jpg" alt="Exemple de stride dans une convolution, l'effet du stride = 1">
+                                <figcaption>Exemple de stride dans une convolution, l'effet du stride = 1.</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="images/ml7.jpg" alt="Impact du stride sur la taille de sortie, l'effet du stride = 2">
+                                <figcaption>Impact du stride sur la taille de sortie, l'effet du stride = 2.</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <strong>Pooling</strong> : Permet de réduire la dimension spatiale entre deux couches convolutives, par exemple avec 
+                            \( \text{MaxPooling} \) qui prend le maximum local dans une fenêtre de taille donnée. 
+                            Cette opération rend le réseau plus robuste aux petites translations du signal.
+                            <figure>
+                                <img src="images/ml8.jpg" alt="Exemple de MaxPooling dans un CNN">
+                                <figcaption>Exemple de MaxPooling dans un CNN.</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+            <!-- ======== AUTO-ENCODEUR ET VAE ======== -->
+            <div class="sub-section">
+                <h3>Autoencodeur et Autoencodeur Variationnel (VAE)</h3>
+                
+                <p>
+                    Un <strong>autoencodeur classique</strong> est un réseau dont la tâche consiste à 
+                    « compresser » une donnée dans un vecteur de dimension plus faible (<em>code latent</em>) 
+                    puis à la <em>reconstruire</em>. Cela se fait via deux blocs : un <em>encodeur</em> qui mappe l’entrée 
+                    vers une dimension réduite, et un <em>décodeur</em> qui cherche à reproduire l’entrée initiale.
+                    <figure>
+                        <img src="images/ml9.png" alt="Schéma d'un autoencodeur classique">
+                        <figcaption>Schéma d'un autoencodeur classique.</figcaption>
+                    </figure>
+                </p>
+
+                <p>
+                    <strong>Autoencodeur Variationnel (VAE)</strong> : 
+                    À la différence d’un autoencodeur classique, le VAE impose une régularisation probabiliste de son espace latent. 
+                    Au lieu d'apprendre directement un « code », il apprend les paramètres 
+                    \( z_{\text{mean}} \) et \( z_{\text{log_var}} \) 
+                    d’une distribution gaussienne, puis échantillonne un vecteur latent 
+                    \( z \sim \mathcal{N}\bigl(z_{\text{mean}}, \exp(z_{\text{log_var}})\bigr) \). 
+                    Cette contrainte favorise un <em>espace latent régulier et continu</em>, 
+                    dans lequel on peut naviguer pour générer de nouvelles données.
+                    <div class="figure-left-right">
+                        <figure>
+                            <img src="images/ml10.png" alt="Diagramme d'un Autoencodeur Variationnel (VAE)">
+                            <figcaption>Diagramme d'un Autoencodeur Variationnel (VAE).</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/ml11.jpg" alt="Illustration de la régularité de l'espace latent d'un VAE">
+                            <figcaption>Illustration de la régularité de l'espace latent d'un VAE.</figcaption>
+                        </figure>
+                    </div>
+                </p>
+
+                <p>
+                    <strong>Fonction de perte dans un VAE</strong> :  
+                    La perte globale d’un VAE comprend deux termes principaux :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Perte de reconstruction (Reconstruction Loss)</strong> :  
+                        Compare la sortie du décodeur \( y \) à l’entrée d’origine \( x \).  
+                        Elle peut être implémentée sous forme de 
+                        <em>Mean Squared Error (MSE)</em>, <em>Mean Absolute Error</em> 
+                        ou encore <em>Binary Crossentropy</em> 
+                        (selon la nature des données).  
+                        <br>
+                        <em>Rôle :</em> Forcer le réseau à extraire suffisamment d’informations 
+                        dans \( z \) pour recréer au mieux les données initiales.
+                    </li>
+                    <li>
+                        <strong>Divergence KL (Kullback-Leibler)</strong> :  
+                        Mesure la différence entre la distribution apprise pour 
+                        \( z \) (i.e., \( \mathcal{N}(z_{\text{mean}}, \exp(z_{\text{log_var}})) \)) 
+                        et la distribution <em>prior</em> (généralement 
+                        \( \mathcal{N}(\mathbf{0}, \mathbf{I}) \)).  
+                        <br>
+                        <em>Rôle :</em> Encourager la distribution latente à rester proche de 
+                        \( \mathcal{N}(\mathbf{0}, \mathbf{I}) \), 
+                        ce qui garantit que l’espace latent soit « lisse » et <em>interpolable</em>. 
+                        Ainsi, l’échantillonnage de nouveaux \( z \) 
+                        reste cohérent avec la distribution d’origine.
+                    </li>
+                </ul>
+                <p>
+                    Cette combinaison se traduit souvent de la manière suivante :  
+                    <br>
+                    $$
+                    L_{\mathrm{VAE}}(x) = L_{\mathrm{reconstruction}}(x, y) + \beta \times KL\bigl[\mathcal{N}(z_{\text{mean}}, z_{\text{log_var}}) \,\|\, \mathcal{N}(0, I)\bigr],
+                    $$
+                    où \( \beta \) est un facteur d’échelle (souvent 1) permettant d’ajuster 
+                    l’importance de la régularisation par rapport à la reconstruction. 
+                    Un équilibre adéquat entre ces deux termes permet au VAE de générer 
+                    un espace latent utile et de produire des reconstructions fidèles.
+                    <figure>
+                        <img src="images/ml12.png" alt="Graphique illustrant l'effet des termes de la fonction de perte d'un VAE">
+                        <figcaption>Graphique illustrant l'effet des termes de la fonction de perte d'un VAE.</figcaption>
+                    </figure>
+                </p>
+
+                <p>
+                    <strong>Génération de données</strong> :  
+                    Une fois le VAE entraîné, on peut générer des échantillons inédits en tirant au sort un \( z \) 
+                    depuis la distribution normale standard \( \mathcal{N}(0, I) \), puis en le passant dans le <em>décodeur</em>. 
+                    Grâce à la régularisation via la KL-divergence, tous les voisinages de \( z \) 
+                    dans cet espace latent correspondent à des échantillons valides.
+                </p>
+            </div>
+
+            <!-- ======== PCA ======== -->
+            <div class="sub-section">
+                <h3>Analyse en Composantes Principales (PCA)</h3>
+                <p>Le PCA est une méthode de réduction dimensionnelle projetant les données sur des axes qui maximisent la variance. 
+                   Il est très utile pour visualiser en 2D ou 3D des représentations latentes de haute dimension 
+                   (telles que celles issues d’un VAE), et ainsi mieux comprendre la structure de l’espace latent.
+                   <figure>
+                    <img src="images/ml13.png" alt="Illustration de l'analyse en composantes principales (PCA)">
+                    <figcaption>Illustration de l'analyse en composantes principales (PCA).</figcaption>
+                </figure>
+                </p>
+            </div>
+
+            <!-- ======== RÉGRESSION PAR RÉSEAUX DE NEURONES ======== -->
+            <div class="sub-section">
+                <h3>Régresser avec les Réseaux de Neurones</h3>
+                <p>Les réseaux de neurones peuvent également être utilisés pour des tâches de <strong>régression</strong>, 
+                   c’est-à-dire la prédiction d’une valeur continue (ex. un <em>gain</em> en optique). 
+                   Ici, l’architecture peut être plus simple : plusieurs couches denses munies de fonctions d’activation non linéaires, 
+                   et une couche de sortie à un seul neurone (sans activation ou avec une activation adaptée). 
+                   Pendant l’entraînement, on minimise une fonction de coût de type <em>Mean Squared Error</em> ou <em>Mean Absolute Error</em>.
+                   <figure>
+                    <img src="images/ml14.jpg" alt="Illustration d'une tâche de régression avec un réseau de neurones">
+                    <figcaption>Illustration d'une tâche de régression avec un réseau de neurones.</figcaption>
+                </figure>
+                </p>
+            </div>
+        </section>
+
+    <section id="methodology">
+        <div class="section-container">
+            <h2 class="section-title">Méthodologie</h2>
+
+            <div class="sub-section">
+                <h3>Processus général de génération et validation des profils</h3>
+                <p>
+                    Le processus de travail repose sur une boucle itérative visant à optimiser les profils de pas pour maximiser l'énergie des particules. La figure ci-dessous illustre les différentes étapes de ce cycle :
+                </p>
+                
+                <!-- Insertion du diagramme -->
+                
+                <div class="diagram-container">
+                    <div class="mermaid-center">
+                        <div class="mermaid">
+                            flowchart TD
+                                A[Créer des profils] --> B[Lancer les calculs avec Dopplight]
+                                B --> C[Stocker les résultats sous forme de fichier CSV]
+                                C --> D[Traiter les données]
+                                D --> E[Lancer VAE]
+                                E --> F[Valider et ajouter de nouveaux profils]
+                                F -->|Cycle itératif| A
+                                
+                                style A fill:#f9f,stroke:#333,stroke-width:2px
+                                style B fill:#bbf,stroke:#333,stroke-width:2px
+                                style C fill:#ddf,stroke:#333,stroke-width:2px
+                                style D fill:#fdd,stroke:#333,stroke-width:2px
+                                style E fill:#dfd,stroke:#333,stroke-width:2px
+                                style F fill:#ffd,stroke:#333,stroke-width:2px
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="process-steps">
+                    <ol class="stylish-list">
+                        <li>
+                            <strong>Créer des profils :</strong>
+                            <p>La première étape consiste à générer différents types de profils de pas (constant, quadratique, linéaire, etc.).</p>
+                        </li>
+                        <li>
+                            <strong>Lancer les calculs avec Dopplight :</strong>
+                            <p>Chaque profil est simulé parallèlement à l'aide du logiciel Dopplight pour évaluer les performances en termes d'énergie des particules.</p>
+                        </li>
+                        <li>
+                            <strong>Stocker les résultats sous forme de fichier CSV :</strong>
+                            <p>Les résultats des simulations sont sauvegardés pour une analyse et un traitement ultérieurs.</p>
+                        </li>
+                        <li>
+                            <strong>Traiter les données :</strong>
+                            <p>Une fois les résultats stockés, les données sont analysées pour extraire des tendances, corrélations et insights permettant d'orienter la suite du travail.</p>
+                        </li>
+                        <li>
+                            <strong>Lancer VAE :</strong>
+                            <p>Un autoencodeur variationnel (VAE) est utilisé pour générer de nouveaux profils optimisés à partir de la base de données.</p>
+                        </li>
+                        <li>
+                            <strong>Valider et ajouter de nouveaux profils :</strong>
+                            <p>Les profils générés par le VAE sont simulés à nouveau avec Dopplight pour évaluer leurs performances. Si les résultats sont satisfaisants, ces nouveaux profils sont ajoutés à la base de données, bouclant ainsi le cycle.</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Définition et types de profils</h3>
+                
+                <!-- Two-column layout -->
+                <div class="grid-container">
+                    <div class="column">
+                        <p>Un <strong>profil</strong> peut être défini comme un tableau 2D dans lequel :</p>
+                        <ul class="stylish-list">
+                            <li>La première colonne contient les points de discrétisation Z<sub>i</sub>, qui représentent les positions le long de l'axe Z.</li>
+                            <li>La deuxième colonne contient les pas h<sub>i</sub>, qui sont les valeurs associées à chaque point de discrétisation.</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="figure-container">
+                            <img src="./images/porfil.png" alt="Définition d'un profil" class="center-image">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="constraints-section">
+                    <h4>Contraintes sur les profils</h4>
+                    <p>Lors de la génération des profils, certaines contraintes physiques et géométriques doivent être respectées :</p>
+                    <ol class="math-constraints">
+                        <li>0.3×10<sup>-3</sup> m ≤ h(Z) ≤ 1.2×10<sup>-3</sup> m (soit entre 0.3 et 1.2 mm).</li>
+                        <li>-0.1 ≤ h'(Z) ≤ 0.1 (contrainte sur la variation du pas, sans unité).</li>
+                        <li>0.3×10<sup>-3</sup> m ≤ h<sub>0</sub> ≤ 0.7×10<sup>-3</sup> m (soit entre 0.3 et 0.7 mm pour le pas initial).</li>
+                    </ol>
+                </div>
+            
+                <div class="profile-types">
+                    <h4>Exemples de types de profils</h4>
+                    <p>Pour cette étude, nous avons exploité plusieurs types de profils :</p>
+                    <div class="profile-examples">
+                        <div class="profile-example">
+                            <img src="./images/lineara.png" alt="Profil constant" class="center-image">
+                            <p><strong>Profil constant</strong> : Le pas reste constant tout au long de la longueur du coil.</p>
+                        </div>
+                        <div class="profile-example">
+                            <img src="./images/lineara1.png" alt="Profil linéaire" class="center-image">
+                            <p><strong>Profil linéaire</strong> : Le pas varie linéairement en fonction de Z.</p>
+                        </div>
+                        <div class="profile-example">
+                            <img src="./images/etude8.png" alt="Profil quadratique" class="center-image">
+                            <p><strong>Profil quadratique</strong> : Le pas suit une variation quadratique, permettant d'explorer des configurations plus complexes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Simulation avec DoPPLIGHT</h3>
+                
+                <div class="introduction-text">
+                    <p><strong>DoPPLIGHT</strong> (<em>Dynamics of Particles Produced by Laser Interaction in Grounded Helical Targets</em>) est un outil numérique développé pour simuler le comportement des particules dans une géométrie hélicoïdale. Cet outil permet d'évaluer l'interaction des particules avec les champs électromagnétiques générés par une bobine hélicoïdale, ainsi que les effets des charges d'espace.</p>
+                </div>
+            
+                <div class="dopplight-workflow">
+                    <h4>Fonctionnement général</h4>
+                    <p>Le fonctionnement de DoPPLIGHT peut être résumé en plusieurs étapes, illustrées dans la figure ci-dessous :</p>
+                    
+                    <div class="figure-container">
+                        <img src="./images/dopplight.png" alt="Schéma DoPPLIGHT" class="center-image">
+                        <figcaption class="figure-caption">
+                            <strong>Figure 3:</strong> Schéma illustrant le fonctionnement de DoPPLIGHT et ses principales étapes de simulation.
+                        </figcaption>
+                    </div>
+            
+                    <ol class="workflow-list">
+                        <li>
+                            <strong>Entrées principales</strong> : Le logiciel prend en entrée les paramètres géométriques de la bobine (rayon, longueur, pas), les termes sources des particules et le courant à l'entrée de l'hélice.
+                        </li>
+                        <li>
+                            <strong>Calcul des champs électromagnétiques</strong> : Les champs sont calculés en utilisant les équations de Maxwell, avec des conditions aux limites définies pour la bobine modélisée comme un cylindre infiniment mince.
+                        </li>
+                        <li>
+                            <strong>Simulation des trajectoires</strong> : Les particules (protons et électrons) sont injectées dans la bobine, et leurs trajectoires sont calculées à l'aide d'un algorithme spécifique (<em>Boris pusher</em>).
+                        </li>
+                        <li>
+                            <strong>Résultats</strong> : À la sortie de la bobine, le code fournit la distribution d'énergie des particules et leurs positions.
+                        </li>
+                    </ol>
+                </div>
+            
+                <div class="dopplight-advantages">
+                    <h4>Avantages de DoPPLIGHT</h4>
+                    <p>DoPPLIGHT se distingue par sa rapidité et sa simplicité : il peut effectuer une simulation complète en seulement quelques minutes sur un ordinateur portable, sans nécessiter de maillage complexe. Cela en fait un outil particulièrement efficace pour explorer différentes configurations de bobine.</p>
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Base de données et analyse statistique</h3>
+                
+                <div class="introduction-text">
+                    <p>Les résultats obtenus à partir des simulations ont été stockés dans une base de données structurée pour faciliter leur traitement et leur analyse. Cette base regroupe les paramètres des profils, les résultats associés aux simulations, ainsi que des métriques spécifiques telles que le <strong>cutoff</strong> et le <strong>Q_sup</strong>.</p>
+                </div>
+            
+                <div class="analysis-section">
+                    <h4>Analyse des résultats</h4>
+                    <p>Après traitement des données, plusieurs visualisations ont été générées pour étudier les tendances et comprendre les corrélations entre les paramètres et les résultats :</p>
+            
+                    <!-- Histogramme du cutoff -->
+                    <div class="figure-section">
+                        <img src="./images/cuttof_bdbm.png" alt="Histogramme du cutoff" class="center-image">
+                        <div class="figure-title">
+                            <strong>Figure 4.1 : Histogramme de cutoff</strong>
+                        </div>
+                        <div class="figure-description">
+                            Cette figure représente la distribution des valeurs de <strong>cutoff</strong> dans la base de données. On observe une forte densité autour des valeurs proches de 20 et 40, indiquant deux régions de fréquences élevées. Cela pourrait être lié à des configurations spécifiques des profils générant des comportements similaires.
+                        </div>
+                    </div>
+
+                    <!-- Histogramme de Q_sup -->
+                    <div class="figure-section">
+                        <img src="./images/qsup_bdbm.png" alt="Histogramme de Q_sup" class="center-image">
+                        <div class="figure-title">
+                            <strong>Figure 4.2 : </strong> Histogramme de <strong>Q_sup</strong>
+                        </div>
+                        <div class="figure-description">
+                            La distribution de <strong>Q_sup</strong> met en évidence une concentration autour de 0.1, ce qui correspond à des performances typiques pour la majorité des configurations testées. Toutefois, quelques valeurs élevées de <strong>Q_sup</strong> au-delà de 0.3 sont observées.
+                        </div>
+                    </div>       
+
+                    <!-- Corrélation entre cutoff et Q_sup -->
+                    <div class="figure-section">
+                        <img src="./images/qsup_cuttof_bdbm.png" alt="Relation entre Q_sup et cutoff" class="center-image">
+
+
+                        <div class="figure-title">
+                            <strong>Figure 4.3 : :</strong> Relation entre <strong>Q_sup</strong> et <strong>cutoff</strong>.
+                        </div>
+                        <div class="figure-description">
+                            Cette figure montre la relation entre <strong>cutoff</strong> et <strong>Q_sup</strong>. On remarque que la majorité des points se regroupent pour des valeurs de <strong>cutoff</strong> comprises entre 20 et 40, avec une dispersion importante pour les valeurs plus faibles de <strong>Q_sup</strong>.
+                        </div>
+                    </div>
+            
+
+                </div>
+            
+                <div class="conclusion-section">
+                    <h4>Conclusion de l'analyse</h4>
+                    <p>L'analyse statistique met en lumière les tendances dans les résultats simulés. Les figures révèlent les zones d'intérêt en termes de cutoff et <strong>Q_sup</strong>, fournissant des pistes pour ajuster les paramètres des profils et explorer davantage les configurations générant des gains significatifs.</p>
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Lancement du VAE</h3>
+                <div class="transition-section">
+                    <p>Pour le lancement du VAE, nous avons modifié le code afin de pouvoir travailler avec une base de données adaptée à notre problématique. Dans les sections suivantes, vous trouverez les modifications effectuées.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-database"></i> Entraînement et Validation du VAE</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="stylish-list">
+                            <li>
+                                <strong>Chargement & Prétraitement :</strong>
+                                <p>
+                                    Les données sont chargées depuis un <code>.npy</code> avec les clés 
+                                    <code>'data'</code>, <code>'gain'</code>, <code>'time'</code>, puis normalisées. 
+                                    On redimensionne ensuite chaque échantillon en \( (N, 40, 1) \) pour pouvoir 
+                                    le traiter par des couches \( \text{Conv1D} \).
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Construction du VAE :</strong>
+                                <ul>
+                                    <li><strong>Encodeur :</strong> Couches \( \text{Conv1D} \) (32, 64, 128, 256 filtres) avec \( \text{MaxPooling1D} \), 
+                                        puis deux couches \( \text{Dense} \) pour générer \( z_{\text{mean}} \) et \( z_{\text{log_var}} \).</li>
+                                    <li><strong>Décodeur :</strong> Opérations inverses (couches \( \text{Dense} \), \( \text{Reshape} \), \( \text{UpSampling1D} \), \( \text{Conv1DTranspose} \)) 
+                                        pour restaurer la forme originale du signal.</li>
+                                    <li><strong>Perte :</strong> Combinaison d'une perte de reconstruction (MSE ou MAE) et de la divergence KL. 
+                                        L’échantillonnage \( z \sim \mathcal{N}(z_{\text{mean}}, \exp(z_{\text{log_var}})) \) assure la nature <em>variationnelle</em>.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Réseau de Gain :</strong>
+                                <p>
+                                    Après l’entraînement du VAE, on construit un réseau dense pour prédire la valeur de <em>gain</em> 
+                                    (<em>z → gain</em>) depuis les coordonnées latentes \( z \). 
+                                    Cela permet, au-delà de la reconstruction du signal, d’estimer rapidement le gain associé à une configuration latente donnée.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Enregistrement et Visualisation :</strong>
+                                <p>
+                                    Le code trace les courbes de pertes, enregistre le modèle (<code>.keras</code>), 
+                                    et produit des figures illustrant la qualité de reconstruction et la distribution des erreurs. 
+                                    L'espace latent est sauvegardé dans un fichier (<code>latent_space_z.txt</code>) pour un usage ultérieur.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 0.8em;">
+                    <div class="card-header">
+                        <h4><i class="fas fa-chart-line"></i> Post-Traitement Interactif</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="stylish-list">
+                            <li>
+                                <strong>Chargement des Modèles & Données :</strong>
+                                <p>
+                                    Le script <code>interactive_postprocess</code> charge l’<code>encoder</code>, le <code>decoder</code> et le <code>gain_model</code>, 
+                                    ainsi que le fichier <code>latent_space_z.txt</code> et le dataset original (<code>gain</code>, <code>time</code>, etc.).
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Projection PCA en 2D :</strong>
+                                <p>
+                                    Une <code>PCA</code> (2 composantes) est appliquée à l’espace latent pour visualiser chaque configuration sur un plan. 
+                                    Une régression linéaire inverse (<code>pca_to_latent</code>) permet de projeter un point du plan PCA 
+                                    vers les dimensions latentes complètes.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Carte de Gain :</strong>
+                                <p>
+                                    En balayant la grille 2D, on peut, via le <code>gain_model</code>, générer un <em>contour plot</em> 
+                                    des valeurs de <em>gain</em>. Les régions d’intérêt (haut/ bas gain) sont ainsi identifiées dans l’espace latent.
+                                </p>
+                            </li>
+                            <li>
+                                <strong>Interface Interactive :</strong>
+                                <p>
+                                    L’utilisateur clique sur la figure pour reconstruire le signal correspondant (via le <code>decoder</code>) 
+                                    et éventuellement estimer son gain (via <code>gain_model</code>). 
+                                    Un <em>clic gauche</em> affiche la forme d’onde, tandis qu’un <em>clic droit</em> enregistre la configuration et l’image dans un fichier.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p class="note">
+                    Grâce à ce workflow, il devient possible de générer de nouvelles configurations de signaux laser 
+                    en interagissant avec un plan 2D (issu de la PCA) et en naviguant dans l’espace latent régulier du VAE. 
+                    Les utilisateurs peuvent explorer des zones de l’espace potentiel peu ou pas couvertes par la base d’apprentissage initiale.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="results">
+        <div class="section-container">
+            <h2 class="section-title">Résultats et Analyses</h2>
+    
+            <!-- Résultats d'entraînement -->
+            <div class="sub-section">
+                <h3>Résultats d'Entraînement</h3>
+                <p>Nous avons choisi une dimention de 5 pour l'espace latent et un coefficient de \(10^{-5}\). Le modèle a été entraîné avec succès sans sur-apprentissage. La convergence des pertes du modèle VAE et du modèle de gain montre une bonne stabilité du processus d'entraînement.</p>
+    
+                <div class="figure-left-right">
+                    <figure>
+                        <img src="images/res1.png" alt="Loss Gain">
+                        <figcaption>Perte du modèle de gain.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/res2.png" alt="Loss VAE">
+                        <figcaption>Perte du modèle VAE.</figcaption>
+                    </figure>
+                </div>
+            </div>
+    
+            <!-- Histogrammes des erreurs -->
+            <div class="sub-section">
+                <h3>Histogrammes des Erreurs</h3>
+                <p>La majorité des prédictions sont réalisées avec une faible erreur, validant ainsi la précision du modèle.</p>
+    
+                <div class="figure-left-right">
+                    <figure>
+                        <img src="images/res3.png" alt="Histogramme des erreurs - Modèle de gain">
+                        <figcaption>Histogramme des erreurs pour le modèle de gain.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/res4.png" alt="Histogramme des erreurs - VAE">
+                        <figcaption>Histogramme des erreurs pour le modèle VAE.</figcaption>
+                    </figure>
+                </div>
+            </div>
+    
+            <!-- Espace latent interactif -->
+            <div class="sub-section">
+                <h3>Espace Latent Interactif</h3>
+                <p>Nous avons exploré l'espace latent généré par le VAE. En interagissant avec cet espace, nous pouvons générer de nouveaux profils et identifier des régions optimales en termes de gain.</p>
+    
+                <figure>
+                    <img src="images/res5.png" alt="Espace latent interactif">
+                    <figcaption>Reconstruction de l'espace latent, carte du gain et représentation des données.</figcaption>
+                </figure>
+            </div>
+    
+            <!-- Décodage de nouveaux profils -->
+            <div class="sub-section">
+                <h3>Décodage de Nouveaux Profils</h3>
+                <p>À partir de l'exploration de l'espace latent, nous avons extrait et reconstruit de nouveaux profils.</p>
+    
+                <div class="figure-left-right">
+                    <figure>
+                        <img src="images/res6.jpg" alt="Nouveau profil décodé - proche des données">
+                        <figcaption>Un nouveau profil décodé proche des données existantes.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/res7.jpg" alt="Nouveau profil décodé - éloigné des données">
+                        <figcaption>Un nouveau profil décodé éloigné des données existantes.</figcaption>
+                    </figure>
+                </div>
+            </div>
+    
+            <!-- Validation des profils -->
+            <div class="sub-section">
+                <h3>Validation des Profils</h3>
+                <p>Un des profils générés a été validé avec le simulateur Dopplight. Le gain obtenu pour ce profil est de <strong>41.344 MeV</strong>, confirmant la pertinence de la méthode employée.</p>
+    
+                <figure>
+                    <img src="images/res8.png" alt="Validation d'un profil généré">
+                    <figcaption>Profil décodé à partir de l'espace latent reconstruit.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="section-container">
+            <h2 class="section-title">Notre Équipe</h2>
+
+            <div class="sub-section">
+                <h3>Collaborateurs</h3>
+                <p>Liste des membres impliqués dans le projet et leurs rôles respectifs :</p>
+                <div class="collaborators-grid">
+                    <div class="collaborator-card">
+                        <div class="collaborator-name">Ayoub OUDRA</div>
+                    </div>
+                    <div class="collaborator-card">
+                        <div class="collaborator-name">Youness EL MAHJOUBY</div>
+                    </div>
+                    <div class="collaborator-card">
+                        <div class="collaborator-name">Haytham ELBADA</div>
+                    </div>
+                    <div class="collaborator-card">
+                        <div class="collaborator-name">Yassine AIT SAID</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-section">
+                <h3>Partenaires</h3>
+                <p>Partenaires académiques et industriels, notamment CELIA et CEA.</p>
+                <div class="partners-section">
+                    <div class="partners-grid">
+                        <div class="partner-card">
+                            <div class="partner-name">Jean-Luc Feugeas</div>
+                            <div class="partner-role">Chef de projet</div>                        </div>
+                        <div class="partner-card">
+                            <div class="partner-name">Matthieu Bardon</div>
+                        </div>
+                        <div class="partner-card">
+                            <div class="partner-name">Morad Ben Tayeb</div>
+                        </div>
+                        <div class="partner-card">
+                            <div class="partner-name">Aurélia Maïolo</div>
+                        </div>
+                        <div class="partner-card">
+                            <div class="partner-name">Khalil Aliane</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Contact</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="button">Envoyer</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Projet de Recherche. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Fonction pour gérer la navigation active
+        function setActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+    
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+    
+        // Fonction pour gérer le scroll smooth avec offset
+        function handleNavClick() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+    
+        // Initialiser les fonctions
+        document.addEventListener('DOMContentLoaded', () => {
+            setActiveNavLink();
+            handleNavClick();
+        });
+    </script>
+</body>
+</html>
