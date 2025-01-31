@@ -19,6 +19,23 @@
   </script>
 
     <style>
+
+.physics-figure {
+    width: 50%; /* Réduit la largeur à 50% */
+    margin: 2em auto;
+}
+
+.physics-figure .centered-image {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Pour les écrans plus petits */
+@media (max-width: 768px) {
+    .physics-figure {
+        width: 80%;
+    }
+}
         :root {
             --primary-color: #2e7d32;
             --secondary-color: #1b5e20;
@@ -56,7 +73,27 @@
             justify-content: space-between;
             align-items: center;
         }
+        .figure-container {
+    width: 60%; /* Réduit la largeur du conteneur */
+    margin: 2em auto;
+    text-align: center;
+}
 
+.centered-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+/* Pour les écrans plus petits */
+@media (max-width: 768px) {
+    .figure-container {
+        width: 80%; /* Légèrement plus large sur mobile */
+    }
+}
         .logo {
             color: white;
             font-size: 1.5rem;
@@ -854,17 +891,18 @@ strong {
                     <li>Réduction des dommages aux tissus sains environnants.</li>
                     <li>Particulièrement efficace pour les <strong>cancers pédiatriques et tumeurs profondes</strong>.</li>
                 </ul>
-                <div class="figure-container">
-                    <img src="./images/pt2.png" alt="Comparaison entre rayons X et protons" class="centered-image">
-                    <figcaption class="figure-caption">
-                        <div class="figure-title">
-                            <strong>Figure 1 : Comparaison entre rayons X et protons</strong>
-                        </div>
-                        <div class="figure-description">
-                            Illustration du Pic de Bragg montrant la différence entre la protonthérapie et la radiothérapie classique.
-                        </div>
-                    </figcaption>
-                </div>
+<!-- Pour chaque figure dans la section physics -->
+<div class="figure-container" style="width: 50%; margin: 0 auto;">
+    <img src="./images/pt2.png" alt="Comparaison entre rayons X et protons" class="centered-image" style="max-width: 100%; height: auto;">
+    <figcaption class="figure-caption">
+        <div class="figure-title">
+            <strong>Figure 1 : Comparaison entre rayons X et protons</strong>
+        </div>
+        <div class="figure-description">
+        Illustration du Pic de Bragg montrant la différence entre la protonthérapie et la radiothérapie classique.
+        </div>
+    </figcaption>
+</div>
             </div>
     
             <div class="sub-section">
@@ -907,8 +945,8 @@ strong {
                         </ul>
                     </li>
                 </ul>
-                <div class="figure-container">
-                    <img src="./images/TnsaPNG.PNG" alt="TNSA Accélération" class="centered-image">
+                <div class="figure-container" style="width: 50%; margin: 0 auto;">
+                    <img src="./images/TnsaPNG.PNG" alt="TNSA Accélération" class="centered-image" style="max-width: 100%; height: auto;">
                     <figcaption class="figure-caption">
                         <div class="figure-title">
                             <strong>Figure 2 : Processus TNSA</strong>
@@ -963,8 +1001,8 @@ strong {
     
             <div class="sub-section">
                 <h3>Dispersion du courant et rôle du tube ajouté</h3>
-                <div class="figure-container">
-                    <img src="./images/dispersion.PNG" alt="Dispersion du courant" class="centered-image">
+                <div class="figure-container" style="width: 50%; margin: 0 auto;">
+                    <img src="./images/dispersion.PNG" alt="Dispersion du courant" class="centered-image" style="max-width: 100%; height: auto;">
                     <figcaption class="figure-caption">
                         <div class="figure-title">
                             <strong>Figure 3 : Dispersion du courant</strong>
@@ -982,8 +1020,8 @@ strong {
     
             <div class="sub-section">
                 <h3>Solution : Ajout d'un tube conducteur</h3>
-                <div class="figure-container">
-                    <img src="./images/tube.PNG" alt="Tube" class="centered-image">
+                <div class="figure-container" style="width: 30%; margin: 0 auto;">
+                    <img src="./images/tube.PNG" alt="Tube" class="centered-image" style="max-width: 100%; height: auto;">
                     <figcaption class="figure-caption">
                         <div class="figure-title">
                             <strong>Figure 4 : Structure du tube conducteur</strong>
@@ -996,8 +1034,8 @@ strong {
                 <ul class="content-list">
                     <li>Le tube limite la dispersion du courant le long de la bobine et augmente le regroupement de protons.</li>
                 </ul>
-                <div class="figure-container">
-                    <img src="./images/couranttube.PNG" alt="Courant avec et sans tube" class="centered-image">
+                <div class="figure-container" style="width: 50%; margin: 0 auto;">
+                    <img src="./images/couranttube.PNG" alt="Courant avec et sans tube" class="centered-image" style="max-width: 100%; height: auto;">
                     <figcaption class="figure-caption">
                         <div class="figure-title">
                             <strong>Figure 5 : Effet du tube sur le courant</strong>
